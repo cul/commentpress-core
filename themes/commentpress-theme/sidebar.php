@@ -6,7 +6,7 @@ global $commentpress_core;
 
 
 // init tab order
-$_tab_order = array( 'comments', 'activity', 'contents' );
+$_tab_order = array( 'comments', 'contents' );
 
 // if we have the plugin enabled and the method exists...
 if ( 

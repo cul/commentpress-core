@@ -2270,7 +2270,7 @@ function commentpress_show_activity_tab() {
 
 
 	// --<
-	return true;
+	return false;
 	
 }
 endif; // commentpress_show_activity_tab
@@ -2605,96 +2605,8 @@ function commentpress_get_comments_by_para() {
 		
 			// count comments
 			$comment_count = count( $_comments );
-			
-			// switch, depending on key
-			switch( $text_signature ) {
-				
-				// whole page comments
-				case 'WHOLE_PAGE_OR_POST_COMMENTS':
 
-					// clear text signature
-					$text_sig = '';
-					
-					// clear the paragraph number
-					$para_num = '';
-					
-					// define default phrase
-					$paragraph_text = __( 'the whole page', 'commentpress-core' );
-					
-					$current_type = get_post_type();
-					//print_r( $current_type ); die();
-					
-					switch( $current_type ) {
-						
-						// we can add more of these if needed
-						case 'post': $paragraph_text = __( 'the whole post', 'commentpress-core' ); break;
-						case 'page': $paragraph_text = __( 'the whole page', 'commentpress-core' ); break;
-						
-					}
-				
-					// set permalink text
-					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
-					
-					// define heading text
-					$heading_text = sprintf( _n(
-						
-						// singular
-						'<span>%d</span> Comment on ', 
-						
-						// plural
-						'<span>%d</span> Comments on ', 
-						
-						// number
-						$comment_count, 
-						
-						// domain
-						'commentpress-core'
-					
-					// substitution
-					), $comment_count );
-					
-					// append para text
-					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
-					
-					break;
-				
-				// pingbacks etc
-				case 'PINGS_AND_TRACKS':
-
-					// set "unique-enough" text signature
-					$text_sig = 'pingbacksandtrackbacks';
-					
-					// clear the paragraph number
-					$para_num = '';
-					
-					// define heading text
-					$heading_text = sprintf( _n(
-						
-						// singular
-						'<span>%d</span> Pingback or trackback', 
-						
-						// plural
-						'<span>%d</span> Pingbacks and trackbacks', 
-						
-						// number
-						$comment_count, 
-						
-						// domain
-						'commentpress-core'
-					
-					// substitution
-					), $comment_count );
-					
-					// set permalink text
-					$permalink_text = __('Permalink for pingbacks and trackbacks', 'commentpress-core' );
-					
-					// wrap in span
-					$heading_text = '<span>'.$heading_text.'</span>';
-
-					break;
-					
-				// textblock comments
-				default:
+			  if($comment_count > 0 || is_user_logged_in()){
 
 					// get text signature
 					$text_sig = $text_signature;
@@ -2747,10 +2659,10 @@ function commentpress_get_comments_by_para() {
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Comment on ', 
+						'<span>%d</span> Note on ', 
 						
 						// plural
-						'<span>%d</span> Comments on ', 
+						'<span>%d</span> Notes on ', 
 						
 						// number
 						$comment_count, 
@@ -2763,8 +2675,6 @@ function commentpress_get_comments_by_para() {
 					
 					// append para text
 					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
-					
-			} // end switch
 		
 
 
@@ -2789,7 +2699,7 @@ function commentpress_get_comments_by_para() {
 				
 				// open paragraph wrapper
 				echo '<div id="para_wrapper-'.$text_sig.'" class="paragraph_wrapper'.$no_comments_class.'">'."\n\n";
-	
+
 				// have we already used this text signature?
 				if( in_array( $text_sig, $used_text_sigs ) ) {
 				
@@ -2799,7 +2709,7 @@ function commentpress_get_comments_by_para() {
 								'It appears that this paragraph is a duplicate of a previous one.'.
 							'</p>'."\n".
 						 '</div>'."\n\n";
-	
+				
 				} else {
 			
 					// if we have comments...
@@ -2819,6 +2729,10 @@ function commentpress_get_comments_by_para() {
 					// add to used array
 					$used_text_sigs[] = $text_sig;
 				
+					//dante: this comments out the whole commenting section for the non-logged in
+					//dante: it supercedes the checks that are left within the block below
+					if(is_user_logged_in()){
+
 					// only add comment-on-para link if comments are open and it's not the pingback section
 					if ( 'open' == $post->comment_status AND $text_signature != 'PINGS_AND_TRACKS' ) {
 					
@@ -2858,6 +2772,7 @@ function commentpress_get_comments_by_para() {
 						}
 							 
 					}
+				}//dante is user logged in check
 						 
 				}
 	
@@ -2868,8 +2783,8 @@ function commentpress_get_comments_by_para() {
 			
 			// increment signature array counter
 			$sig_counter++;
-			
-		}
+		}//if comment count > 0 || user is logged in
+	       }//foreach comments sorted
 		
 	}
 	
@@ -2940,6 +2855,7 @@ if ( ! function_exists( 'commentpress_comment_form_title' ) ):
  */
 function commentpress_comment_form_title( 
 	
+
 	$no_reply_text = 'Leave a Reply', 
 	$reply_to_comment_text = 'Leave a Reply to %s', 
 	$reply_to_para_text = 'Leave a Comment on %s', 
@@ -3264,10 +3180,8 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 
 
 <div class="comment-identifier'.$_comment_orphan.'">
-'.get_avatar( $comment, $size='32' ).'
 '.$editlink.'
-'.$author.'		
-<a class="comment_permalink" href="'.htmlspecialchars( get_comment_link() ).'">'.get_comment_date().' at '.get_comment_time().'</a>
+<a class="comment_permalink" href="'.htmlspecialchars( get_comment_link() ).'"></a>
 </div><!-- /comment-identifier -->
 
 
@@ -3276,9 +3190,6 @@ function commentpress_get_comment_markup( $comment, $args, $depth ) {
 '.apply_filters('comment_text', $comment_text ).'
 </div><!-- /comment-content -->
 
-
-
-'.$comment_reply.'
 
 
 

@@ -884,7 +884,10 @@ class CommentpressCoreParser {
 					
 					// assign opening tag markup to line
 					$line = $opening_tag.$line;
-					
+
+					//dante: only provide comment icon if comments > 0 or user logged in
+					$comment_icon = '';
+					if(is_user_logged_in() || $comment_count > 0){
 					// get comment icon
 					$comment_icon = $this->parent_obj->display->get_comment_icon( 
 					
@@ -895,7 +898,8 @@ class CommentpressCoreParser {
 					
 					);
 					//_cpdie( $commenticon );
-					
+					}//end dante if
+
 					// replace inline html comment with comment_icon
 					$line = str_replace( '<!-- line-end -->', ' '.$comment_icon, $line );
 					

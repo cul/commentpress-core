@@ -29,8 +29,6 @@ class CommentpressCoreNavigator {
 
 
 
-
-
 	/*
 	============================================================================
 	Properties
@@ -59,10 +57,6 @@ class CommentpressCoreNavigator {
 	
 
 
-
-
-
-
 	/** 
 	 * @description: initialises this object
 	 * @param object $parent_obj a reference to the parent object
@@ -71,7 +65,8 @@ class CommentpressCoreNavigator {
 	 *
 	 */
 	function __construct( $parent_obj ) {
-	
+
+
 		// store reference to parent
 		$this->parent_obj = $parent_obj;
 	

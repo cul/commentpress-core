@@ -212,21 +212,6 @@ else {
 			?><li><a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo $title_title; ?>"><?php echo $title_title; ?></a></li><?php
 		
 		}
-	
-		// show link to general comments page if we have one
-		echo $commentpress_core->get_page_link( 'cp_general_comments_page' );
-		
-		// show link to all comments page if we have one
-		echo $commentpress_core->get_page_link( 'cp_all_comments_page' );
-		
-		// show link to comments-by-user page if we have one
-		echo $commentpress_core->get_page_link( 'cp_comments_by_page' );
-		
-		// show link to book blog page if we have one
-		echo $commentpress_core->get_page_link( 'cp_blog_page' );
-		
-		// show link to book blog archive page if we have one
-		echo $commentpress_core->get_page_link( 'cp_blog_archive_page' );
 		
 	}
 		

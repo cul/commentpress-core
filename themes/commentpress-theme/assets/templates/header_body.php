@@ -42,7 +42,9 @@ Separated this out for inclusion in multiple files.
 	</div><!-- /book_search -->
 	
 	<?php 
-	
+	  //dante check - visitors can't log in
+	if(is_user_logged_in()){
+
 	// until WordPress supports a locate_theme_file() function, use filter
 	$include = apply_filters( 
 		'cp_template_user_links',
@@ -50,7 +52,7 @@ Separated this out for inclusion in multiple files.
 	);
 	
 	include( $include );
-	
+	}
 	?>
 	
 </div><!-- /book_header -->

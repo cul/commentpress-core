@@ -28,8 +28,6 @@ class CommentpressCore {
 
 
 
-
-
 	/*
 	============================================================================
 	Properties
@@ -751,6 +749,7 @@ class CommentpressCore {
 	 */
 	function the_content( $content ) {
 	
+
 		// reference our post
 		global $post;
 		

@@ -87,11 +87,10 @@ if ( is_multisite() ) {
 	
 	}
 
-} else {
+ } else {
 
 	// if logged in
-	if ( is_user_logged_in() ) {
-	
+  	if ( is_user_logged_in() ) {
 		// set default link name
 		$_dashboard_title = apply_filters( 
 			'cp_user_links_dashboard_title', 

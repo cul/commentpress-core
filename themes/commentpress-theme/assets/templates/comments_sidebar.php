@@ -17,7 +17,7 @@ if ( $post->comment_count == 0 ) { $no_comments_class = ' no_comments'; }
 
 <div class="sidebar_header">
 
-<h2>Comments</h2>
+<h2>Notes</h2>
 
 </div>
 

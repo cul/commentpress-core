@@ -27,7 +27,6 @@
 <div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
 
-
 	<?php
 	
 	// if we've elected to show the title...

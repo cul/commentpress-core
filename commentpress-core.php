@@ -1,8 +1,8 @@
 <?php /*
 --------------------------------------------------------------------------------
-Plugin Name: CommentPress Core
+Plugin Name: Dante CommentPress Core
 Plugin URI: http://www.futureofthebook.org/commentpress/
-Description: CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
+Description: CDRS Dante project version of commentpress-core. CommentPress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Institute for the Future of the Book
 Version: 3.4.8
 Author URI: http://www.futureofthebook.org
