@@ -26,12 +26,15 @@
 
 	<?php //$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
 	<?php /* If this is a category archive */ if (is_category()) { ?>
-	<h3 class="post_title">Archive for the &#8216;<?php single_cat_title(); ?>&#8217; Category</h3>
+								       <h3 class="post_title">TO DO: CREATE TITLE FOR TRANSLATION {and supress or alter individual post titles}</h3>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
 	<h3 class="post_title">Posts Tagged &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
 	<h3 class="post_title">Archives</h3>
 	<?php } ?>
+
+	<?php $counter = 0; ?>
+
 	
 	<?php while (have_posts()) : the_post(); ?>
 
@@ -39,14 +42,24 @@
 
 			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
-			<div class="search_meta">
-				<?php commentpress_echo_post_meta(); ?>
-			</div>
+			<?php 
+			if($counter == 0) {
+			  echo  '<div class="content_left">' . "\n";
+			  $counter = 1;
+			}else{
+			  echo '<div class="content_right">' . "\n";
+			  $counter = 0;
+			}
+                         ?>
+
 
 			<?php the_content() ?>
 		
-			<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-		
+			<?php 
+ 
+			echo '</p></div>';
+                         ?>
+
 		</div><!-- /archive_item -->
 	
 	<?php endwhile; ?>
