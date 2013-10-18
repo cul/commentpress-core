@@ -1169,7 +1169,8 @@ HELPTEXT;
 				), $para_num );
 				
 				// define paragraph marker
-				$para_marker = '<span class="para_marker"><a id="'.$text_signature.'" href="#'.$text_signature.'" title="'.$permalink_text.'">&para; <span>'.(string) $para_num.'</span></a></span>';
+				//				$para_marker = '<span class="para_marker"><a id="'.$text_signature.'" href="#'.$text_signature.'" title="'.$permalink_text.'">&para; <span>'.(string) $para_num.'</span></a></span>';
+				$para_marker = '<span class="para_marker"><a id="'.$text_signature.'" href="#'.$text_signature.'" title="'.$permalink_text.'"> <span></span></a></span>';
 				
 				break;
 			
