@@ -1,6 +1,16 @@
 /* LAYOUT */
 
+.content_left
+{
+	float:left;
+	width:500px;
+}
 
+.content_right
+{
+	float:right;
+	width:250px;
+}
 
 /* text highlighting block */
 .selected_para 
