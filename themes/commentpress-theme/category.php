@@ -40,7 +40,8 @@
 
 		<div class="search_result">
 
-			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+						   
+		<!--	<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3> -->
 			
 			<?php 
 			if($counter == 0) {
@@ -60,10 +61,8 @@
 			echo '</p></div>';
                          ?>
 
-		</div><!-- /archive_item -->
 	
 	<?php endwhile; ?>
-
 
 	
 <?php else : ?>

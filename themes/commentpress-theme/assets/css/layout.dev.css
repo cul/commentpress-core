@@ -3,13 +3,13 @@
 .content_left
 {
 	float:left;
-	width:500px;
+	width:400px;
 }
 
 .content_right
 {
 	float:right;
-	width:250px;
+	width:400px;
 }
 
 /* text highlighting block */
