@@ -26,7 +26,7 @@
 
 	<?php //$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
 	<?php /* If this is a category archive */ if (is_category()) { ?>
-								       <h3 class="post_title">TO DO: CREATE TITLE FOR TRANSLATION {and supress or alter individual post titles}</h3>
+	<h3 class="post_title"><?php single_cat_title(); ?></h3>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
 	<h3 class="post_title">Posts Tagged &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
