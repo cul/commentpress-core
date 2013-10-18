@@ -801,7 +801,7 @@ class CommentpressCore {
 
 				
 		// only parse posts or pages...	
-		if( ( is_single() OR is_page() OR is_attachment() ) AND !$this->db->is_special_page() ) {
+		if( ( is_single() OR is_page() OR is_attachment() OR is_category() ) AND !$this->db->is_special_page() ) {
 			
 			// delegate to parser
 			$content = $this->parser->the_content( $content );
