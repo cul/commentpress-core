@@ -811,7 +811,7 @@ class CommentpressCore {
 		
 		
 		// only parse content once
-		remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
+		//remove_filter( 'the_content', array( $this, 'the_content' ), 20 );
 		
 		
 
