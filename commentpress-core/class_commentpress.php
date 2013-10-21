@@ -2235,10 +2235,8 @@ class CommentpressCore {
 		global $post;
 	
 		
-		
 		// not if we're not on a page/post and especially not if there's no post object
-		if ( !is_singular() OR !is_object( $post ) ) { return false; }
-		
+		if ( !is_singular() AND !is_category() OR !is_object( $post ) ) { return false; }
 		
 		
 		// CP Special Pages special pages are not
