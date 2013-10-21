@@ -26,7 +26,7 @@
 
 	<?php //$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
 	<?php /* If this is a category archive */ if (is_category()) { ?>
-	<h3 class="post_title"><?php single_cat_title(); ?></h3>
+	<h4 class="post_title"><?php single_cat_title(); ?></h4>
 	<?php /* If this is a tag archive */ } elseif( is_tag() ) { ?>
 	<h3 class="post_title">Posts Tagged &#8216;<?php single_tag_title(); ?>&#8217;</h3>
 	<?php /* If this is a paged archive */ } elseif (isset($_GET['paged']) AND !empty($_GET['paged'])) { ?>
@@ -40,9 +40,6 @@
 
 		<div class="search_result">
 
-						   
-		<!--	<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3> -->
-			
 			<?php 
 			if($counter == 0) {
 			  echo  '<div class="content_left">' . "\n";
@@ -53,6 +50,9 @@
 			}
                          ?>
 
+						   
+			<b><?php the_title(); ?></b>
+			
 
 			<?php the_content() ?>
 		
