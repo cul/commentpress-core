@@ -10,7 +10,43 @@ NOTES
 */
 
 
+					
+//for category page compare translations display in dante
+$cat_sigs = array();
+$sidebar_commenting = false;
 
+function set_sidebar_commenting($bool){
+  global $sidebar_commenting;
+  $sidebar_commenting = $bool;
+}
+
+
+function is_sidebar_commenting(){
+  global $sidebar_commenting;
+  return $sidebar_commenting;
+}
+
+
+function store_cat_sigs($sig){
+  global $cat_sigs;
+  foreach($sig as $key => $value)
+    {
+      echo(var_dump($key));
+      echo(var_dump($value));
+            array_push($cat_sigs, $value);
+    }
+}
+
+
+function freshen_text_signatures(){
+  global $commentpress_core, $cat_sigs;
+  $commentpress_core->db->set_text_sigs( $cat_sigs );  
+}
+
+function get_cat_sigs(){
+  global $cat_sigs;
+  return $cat_sigs;
+}
 
 
 /**
@@ -2552,8 +2588,13 @@ function commentpress_get_comments_by_para() {
 
 
 	// get approved comments for this post, sorted comments by text signature
+
+
+	  
+
 	$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
-	//print_r( $comments_sorted ); die();
+
+	//print_r( var_dump($comments_sorted) ); die();
 	
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();

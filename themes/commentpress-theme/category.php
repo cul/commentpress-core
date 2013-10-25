@@ -93,7 +93,13 @@
 
 
 
-<?php get_sidebar(); ?>
+<?php 
+
+freshen_text_signatures();
+set_sidebar_commenting(true);
+get_sidebar(); 
+
+?>
 
 
 

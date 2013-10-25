@@ -34,7 +34,6 @@ class CommentpressCoreParser {
 
 
 
-
 	/*
 	============================================================================
 	Properties
@@ -56,6 +55,7 @@ class CommentpressCoreParser {
 	// sorted comments
 	public $comments_sorted = array();
 	
+
 
 
 
@@ -257,6 +257,7 @@ class CommentpressCoreParser {
 			// generate text signatures array
 			$this->text_signatures = $this->_generate_block_signatures( $content );
 			//print_r( $this->text_signatures ); die();
+print_r( $this->text_signatures );
 			
 			// only parse content if we have an array of sigs
 			if ( !empty( $this->text_signatures ) ) {
@@ -270,9 +271,16 @@ class CommentpressCoreParser {
 
 
 
-		// store text sigs
-		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
 
+		if(is_category()){
+		  // store text sigs
+		  store_cat_sigs($this->text_signatures);
+		  //clear sigs
+		  $this->text_signatures = array();
+		}
+
+
+		$this->parent_obj->db->set_text_sigs( $this->text_signatures );
 
 
 		// --<
@@ -294,16 +302,15 @@ class CommentpressCoreParser {
 	 *
 	 */
 	function get_sorted_comments( $post_ID ) {
-	
 		// have we already sorted the comments?
-		if ( !empty( $this->comments_sorted ) ) {
-			
+		if ( !empty( $this->comments_sorted ) && !is_category() ) {
 			// --<
 			return $this->comments_sorted;
 		
 		}
-	
+
 		// --<
+
 		return $this->_get_sorted_comments( $post_ID );
 		
 	}
@@ -829,11 +836,10 @@ class CommentpressCoreParser {
 
 		// we already have our text signatures, so set flag
 		$sig_key = 0;
+
 		
 		// init our content array
 		$content_array = array();
-	
-
 
 		// run through 'em...
 		foreach( $matches AS $line ) {
@@ -852,13 +858,15 @@ class CommentpressCoreParser {
 				} else {
 				
 					// line commenting
-				
+
+
 					// get a signature for the line
 					$text_signature = $this->text_signatures[ $sig_key ];
-					
+
 					// increment
 					$sig_key++;
 					
+
 					// get comment count
 					// NB: the sorted array contains whole page as key 0, so we use the incremented value
 					$comment_count = count( $this->comments_sorted[ $text_signature ] );
@@ -1905,8 +1913,11 @@ class CommentpressCoreParser {
 		
 	
 		// get all comments
-		$comments = $this->comments_all;
-		
+		if(is_category()){
+		  $comments = $this->parent_obj->db->get_all_comments( $post_ID );
+		}else{
+		  $comments = $this->comments_all;
+		}
 		
 		
 		// filter out any multipage comments not on this page
@@ -1916,8 +1927,13 @@ class CommentpressCoreParser {
 		
 		
 		// get our signatures
-		$_sigs = $this->parent_obj->db->get_text_sigs();
-		//print_r( $_sigs ); die();
+		if(is_category() and is_sidebar_commenting()){
+		  $_sigs = get_cat_sigs();
+		}else{
+		  $_sigs = $this->parent_obj->db->get_text_sigs();
+		}
+
+		//print_r( var_dump($_sigs) ); die();
 		
 		// assign comments to text signatures
 		$_assigned = $this->_assign_comments( $comments, $_sigs );
