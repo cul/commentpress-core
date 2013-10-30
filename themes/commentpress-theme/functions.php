@@ -13,34 +13,52 @@ NOTES
 					
 //for category page compare translations display in dante
 $cat_sigs = array();
+$comment_posts = array();
 $sidebar_commenting = false;
+$cat_comments = array();
 
 function set_sidebar_commenting($bool){
   global $sidebar_commenting;
   $sidebar_commenting = $bool;
 }
 
-
 function is_sidebar_commenting(){
   global $sidebar_commenting;
   return $sidebar_commenting;
 }
 
+function store_id_for_comment_list($id){
+  global $comment_posts;
+  array_push($comment_posts, $id);
+  
+}
 
-function store_cat_sigs($sig){
+
+function store_sig_info($sig){
   global $cat_sigs;
   foreach($sig as $key => $value)
     {
-      echo(var_dump($key));
-      echo(var_dump($value));
-            array_push($cat_sigs, $value);
+      array_push($cat_sigs, $value);
     }
 }
 
 
-function freshen_text_signatures(){
-  global $commentpress_core, $cat_sigs;
+function freshen_comment_info(){
+  global $commentpress_core, $cat_sigs, $comment_posts, $cat_comments;
   $commentpress_core->db->set_text_sigs( $cat_sigs );  
+  foreach($comment_posts as $id){
+   $id_comments = $commentpress_core->get_sorted_comments( $id );
+   foreach($id_comments as $key => $value)
+    {
+      if(!array_key_exists($key, $cat_comments)){
+	$cat_comments[$key] = $value;
+      }else{
+	if(sizeof($value) == 1){
+	  $cat_comments[$key] = $value;
+	}
+      }
+    }
+  }
 }
 
 function get_cat_sigs(){
@@ -48,6 +66,11 @@ function get_cat_sigs(){
   return $cat_sigs;
 }
 
+
+function get_cat_comments(){
+  global $cat_comments;
+  return $cat_comments;
+}
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -2591,11 +2614,13 @@ function commentpress_get_comments_by_para() {
 
 
 	  
+	if(is_category()){
+	  $comments_sorted = get_cat_comments();
+	}else{
+	  $comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
+	}
 
-	$comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 
-	//print_r( var_dump($comments_sorted) ); die();
-	
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();
 
