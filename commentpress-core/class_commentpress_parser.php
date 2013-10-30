@@ -173,7 +173,6 @@ class CommentpressCoreParser {
 		// retrieve all comments and store...
 		// we need this data multiple times and only need to get it once
 		$this->comments_all = $this->parent_obj->db->get_all_comments( $post->ID );
-		
 
 
 		// strip out <!--shortcode--> tags
@@ -274,7 +273,8 @@ print_r( $this->text_signatures );
 
 		if(is_category()){
 		  // store text sigs
-		  store_cat_sigs($this->text_signatures);
+		  store_sig_info($this->text_signatures, $this->comments_all);
+		  store_id_for_comment_list($post->ID);
 		  //clear sigs
 		  $this->text_signatures = array();
 		}
@@ -291,6 +291,7 @@ print_r( $this->text_signatures );
 
 
 
+		
 
 
 
@@ -1933,10 +1934,10 @@ print_r( $this->text_signatures );
 		  $_sigs = $this->parent_obj->db->get_text_sigs();
 		}
 
-		//print_r( var_dump($_sigs) ); die();
-		
+
 		// assign comments to text signatures
 		$_assigned = $this->_assign_comments( $comments, $_sigs );
+
 		
 		// NB: $_assigned is an array with sigs as keys and array of comments as value
 		// it may be empty...
