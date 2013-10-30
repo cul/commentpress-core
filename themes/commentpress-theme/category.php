@@ -95,7 +95,7 @@
 
 <?php 
 
-freshen_text_signatures();
+freshen_comment_info();
 set_sidebar_commenting(true);
 get_sidebar(); 
 
