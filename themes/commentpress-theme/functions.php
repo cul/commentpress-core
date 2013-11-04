@@ -2749,26 +2749,26 @@ function commentpress_get_comments_by_para() {
 
 					
 
-					$heading_text = '';
-					$heading_text = sprintf( _n(
+					// append para text
+					$heading_text = '<span class="source_block">'.$paragraph_text.'</span>';
+					//$heading_text .= sprintf( _n(
 						
 						// singular
-											'<span>%d</span> Note on ', 
+						//					'<span>%d</span> Note', 
 						
 						// plural
-						'<span>%d</span> Notes on ', 
+						//'<span>%d</span> Notes', 
 						
 						// number
-						$comment_count, 
+						//$comment_count, 
 						
 						// domain
-						'commentpress-core'
+						//'commentpress-core'
 					
 					// substitution
-					), $comment_count );
+					//), $comment_count );
 					
-					// append para text
-					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
+					//$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
 
 
 
