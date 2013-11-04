@@ -16,6 +16,7 @@ $cat_sigs = array();
 $comment_posts = array();
 $sidebar_commenting = false;
 $cat_comments = array();
+$post_count = 0;
 
 function set_sidebar_commenting($bool){
   global $sidebar_commenting;
@@ -40,6 +41,16 @@ function store_sig_info($sig){
     {
       array_push($cat_sigs, $value);
     }
+}
+
+function update_current_title(){
+  global $post_count;
+  global $comment_posts;
+    $title = get_the_title($comment_posts[$post_count]);
+  if($post_count == 0){
+    $post_count = 1;
+  }
+  return $title;
 }
 
 
@@ -2613,17 +2624,20 @@ function commentpress_get_comments_by_para() {
 	// get approved comments for this post, sorted comments by text signature
 
 
-	  
+	$current_title = $post->post_title;
 	if(is_category()){
 	  $comments_sorted = get_cat_comments();
+	  $current_title = update_current_title();
 	}else{
 	  $comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 	}
 
-
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();
 
+
+	//dante project will not use WHOLE_PAGE_OR_POST_COMMENTS
+	unset($comments_sorted['WHOLE_PAGE_OR_POST_COMMENTS']);
 
 
 	// if we have any...
@@ -2664,11 +2678,20 @@ function commentpress_get_comments_by_para() {
 		// init array for tracking text sigs
 		$used_text_sigs = array();
 		
-		
+		//for dante, this is used to determine when we refer to the first post title and when to refer to the second, in the category translations comparison view
+		$comments_total_size = sizeof($comments_sorted);
+		$first_post_size = $comments_total_size/2;
+		$first_post_size = floor($first_post_size);
+		$title_counter = 0;
 
 		// loop through each paragraph
 		foreach( $comments_sorted AS $text_signature => $_comments ) {
-		
+		  $title_counter = $title_counter+1;
+
+		  if(is_category() && $title_counter > $first_post_size){
+		    $current_title = update_current_title();
+		  }
+
 			// count comments
 			$comment_count = count( $_comments );
 
@@ -2679,6 +2702,7 @@ function commentpress_get_comments_by_para() {
 				
 					// paragraph number
 					$para_num = $sig_counter;
+					$display_para_num = $para_num + 1;
 					
 					// which parsing method?
 					if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
@@ -2716,16 +2740,20 @@ function commentpress_get_comments_by_para() {
 					}
 					
 					// set paragraph text
-					$paragraph_text = $block_name.' '.$para_num;
-					
+					$paragraph_text = $current_title.' '.$block_name.' '.$display_para_num;
+
 					// set permalink text
 					$permalink_text = __('Permalink for comments on ', 'commentpress-core' ).$paragraph_text;
 					
 					// define heading text
+
+					
+
+					$heading_text = '';
 					$heading_text = sprintf( _n(
 						
 						// singular
-						'<span>%d</span> Note on ', 
+											'<span>%d</span> Note on ', 
 						
 						// plural
 						'<span>%d</span> Notes on ', 
@@ -2741,7 +2769,7 @@ function commentpress_get_comments_by_para() {
 					
 					// append para text
 					$heading_text .= '<span class="source_block">'.$paragraph_text.'</span>';
-		
+
 
 
 			// init no comment class
@@ -2831,14 +2859,15 @@ function commentpress_get_comments_by_para() {
 							// leave comment link
 							echo '<div class="reply_to_para" id="reply_to_para-'.$para_num.'">'."\n".
 									'<p><a class="reply_to_para" href="'.$query.'#respond" onclick="'.$onclick.'">'.
-										__( 'Leave a comment on ', 'commentpress-core' ).$paragraph_text.
+							                      //__( 'Leave a comment on ', 'commentpress-core' ).$paragraph_text.
+										__( 'Leave a comment ', 'commentpress-core' ).$paragraph_text.
 									'</a></p>'."\n".
 								 '</div>'."\n\n";
 							
 						}
 							 
 					}
-				}//dante is user logged in check
+					}//dante is user logged in check
 						 
 				}
 	
@@ -2848,8 +2877,9 @@ function commentpress_get_comments_by_para() {
 			}
 			
 			// increment signature array counter
-			$sig_counter++;
+			//$sig_counter++;
 		}//if comment count > 0 || user is logged in
+		$sig_counter++;
 	       }//foreach comments sorted
 		
 	}
