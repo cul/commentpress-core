@@ -2674,6 +2674,7 @@ function commentpress_get_comments_by_para() {
 		
 		// init counter for text_signatures array
 		$sig_counter = 0;
+		$text_line_count = 0;
 		
 		// init array for tracking text sigs
 		$used_text_sigs = array();
@@ -2690,6 +2691,7 @@ function commentpress_get_comments_by_para() {
 
 		  if(is_category() && $title_counter > $first_post_size){
 		    $current_title = update_current_title();
+		    $text_line_count = $first_post_size;
 		  }
 
 			// count comments
@@ -2702,7 +2704,7 @@ function commentpress_get_comments_by_para() {
 				
 					// paragraph number
 					$para_num = $sig_counter;
-					$display_para_num = $para_num + 1;
+					$display_para_num = $para_num - $text_line_count + 1;
 					
 					// which parsing method?
 					if ( defined( 'COMMENTPRESS_BLOCK' ) ) {
