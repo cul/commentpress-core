@@ -43,14 +43,17 @@ function store_sig_info($sig){
     }
 }
 
-function update_current_title(){
+function update_id_title_array(){
   global $post_count;
   global $comment_posts;
-    $title = get_the_title($comment_posts[$post_count]);
+  $arr = array();
+  $nid = $comment_posts[$post_count];
+  $arr['id'] = $nid;
+  $arr['title'] = get_the_title($nid);
   if($post_count == 0){
     $post_count = 1;
   }
-  return $title;
+  return $arr;
 }
 
 
@@ -2625,9 +2628,13 @@ function commentpress_get_comments_by_para() {
 
 
 	$current_title = $post->post_title;
+	$current_id = $post->ID;
+
 	if(is_category()){
 	  $comments_sorted = get_cat_comments();
-	  $current_title = update_current_title();
+	  $valarr = update_id_title_array();
+	  $current_title = $valarr['title'];
+	  $current_id = $valarr['id'];
 	}else{
 	  $comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 	}
@@ -2690,7 +2697,9 @@ function commentpress_get_comments_by_para() {
 		  $title_counter = $title_counter+1;
 
 		  if(is_category() && $title_counter > $first_post_size){
-		    $current_title = update_current_title();
+		    $valarr = update_id_title_array();
+		    $current_title = $valarr['title'];
+		    $current_id = $valarr['id'];
 		    $text_line_count = $first_post_size;
 		  }
 
@@ -2833,7 +2842,8 @@ function commentpress_get_comments_by_para() {
 					if ( 'open' == $post->comment_status AND $text_signature != 'PINGS_AND_TRACKS' ) {
 					
 						// construct onclick 
-						$onclick = "return addComment.moveFormToPara( '$para_num', '$text_sig', '$post->ID' )";
+						//$onclick = "return addComment.moveFormToPara( '$para_num', '$text_sig', '$post->ID' )";
+						$onclick = "return addComment.moveFormToPara( '$para_num', '$text_sig', $current_id )";
 						
 						// just show replytopara
 						$query = remove_query_arg( array( 'replytocom' ) ); 
