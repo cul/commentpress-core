@@ -67,7 +67,7 @@ function freshen_comment_info(){
       if(!array_key_exists($key, $cat_comments)){
 	$cat_comments[$key] = $value;
       }else{
-	if(sizeof($value) == 1){
+	if(sizeof($value) >= 1){
 	  $cat_comments[$key] = $value;
 	}
       }
@@ -2630,14 +2630,15 @@ function commentpress_get_comments_by_para() {
 	$current_title = $post->post_title;
 	$current_id = $post->ID;
 
+	$comments_sorted = $commentpress_core->get_sorted_comments( $current_id );
+
 	if(is_category()){
 	  $comments_sorted = get_cat_comments();
 	  $valarr = update_id_title_array();
 	  $current_title = $valarr['title'];
 	  $current_id = $valarr['id'];
-	}else{
-	  $comments_sorted = $commentpress_core->get_sorted_comments( $post->ID );
 	}
+
 
 	// get text signatures
 	//$text_sigs = $commentpress_core->db->get_text_sigs();
@@ -2645,6 +2646,7 @@ function commentpress_get_comments_by_para() {
 
 	//dante project will not use WHOLE_PAGE_OR_POST_COMMENTS
 	unset($comments_sorted['WHOLE_PAGE_OR_POST_COMMENTS']);
+	unset($comments_sorted['PINGS_AND_TRACKS']);
 
 
 	// if we have any...
@@ -2688,12 +2690,14 @@ function commentpress_get_comments_by_para() {
 		
 		//for dante, this is used to determine when we refer to the first post title and when to refer to the second, in the category translations comparison view
 		$comments_total_size = sizeof($comments_sorted);
+
 		$first_post_size = $comments_total_size/2;
 		$first_post_size = floor($first_post_size);
 		$title_counter = 0;
 
 		// loop through each paragraph
 		foreach( $comments_sorted AS $text_signature => $_comments ) {
+
 		  $title_counter = $title_counter+1;
 
 		  if(is_category() && $title_counter > $first_post_size){
