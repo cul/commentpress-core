@@ -122,9 +122,6 @@ if ( $tabs_class != '' ) {
 <h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
 <div class="search_meta">
-	
-	<?php commentpress_echo_post_meta(); ?>
-	
 </div>
 
 
@@ -150,32 +147,6 @@ echo commentpress_multipager();
 <?php the_tags( '<p class="postmetadata">Tags: ', ', ', '</p>'); ?>
 
 
-
-<p class="postmetadata">This entry is filed under <?php the_category(', ') ?>. You can follow any responses to this entry through the <?php post_comments_feed_link('RSS 2.0'); ?> feed. <?php 
-	
-	if (('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
-		
-		// Both Comments and Pings are open 
-		?>You can leave a response, or <a href="<?php trackback_url(); ?>" rel="trackback">trackback</a> from your own site. <?php 
-		
-	} elseif (!('open' == $post->comment_status) AND ('open' == $post->ping_status)) {
-	
-		// Only Pings are Open 
-		?>Responses are currently closed, but you can <a href="<?php trackback_url(); ?> " rel="trackback">trackback</a> from your own site. <?php 
-		
-	} elseif (('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
-	
-		// Comments are open, Pings are not 
-		?>You can leave a response. Pinging is currently not allowed. <?php 
-		
-	} elseif (!('open' == $post->comment_status) AND !('open' == $post->ping_status)) {
-		
-		// Neither Comments, nor Pings are open 
-		?>Both comments and pings are currently closed. <?php 
-		
-	} edit_post_link('Edit this entry','','.'); 
-	
-?></p>
 
 
 
