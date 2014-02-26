@@ -874,6 +874,13 @@ HELPTEXT;
 		}
 
 
+		$translation_category_id = get_cat_ID('Translation');
+
+		$args_string = "cat=".$translation_category_id."&posts_per_page=-1&fields=ids";
+		$translation_posts_ids = get_posts($args_string);
+		$exclude = array_merge( $exclude, $translation_posts_ids );
+
+
 		// set list pages defaults
 		$defaults = array(
 		
@@ -894,7 +901,43 @@ HELPTEXT;
 		
 		// use Wordpress function to echo
 		wp_list_pages( $defaults );
+
+		$exclude[] = $translation_category_id;
+
+		// set list categories defaults
+		$cat_defaults =array('show_option_all'    => '',
+				     'orderby'            => 'ID',
+				     'order'              => 'ASC',
+				     'style'              => 'list',
+				     'show_count'         => 0,
+				     'hide_empty'         => 0,
+				     'use_desc_for_title' => 1,
+				     'include'            => '',
+				     'hierarchical'       => 1,
+				     'show_option_none'   => __('No categories'),
+				     'number'             => null,
+				     'taxonomy'           => 'category',
+				     'walker'             => null,
+			'depth' => $depth,
+			'show_date' => '',
+			'date_format' => $this->db->option_get( 'date_format' ),
+			'child_of' => 0,
+			'exclude' => implode( ',', $exclude ),
+			'title_li' => '',
+			'echo' => 1,
+			'authors' => '',
+			'sort_column' => 'menu_order, post_title',
+			'link_before' => '',
+			'link_after' => '',
+			'exclude_tree' => ''
 		
+
+				     );
+		
+
+
+		// use Wordpress function to echo
+		wp_list_categories( $cat_defaults );
 	}
 	
 	
@@ -922,6 +965,7 @@ HELPTEXT;
 		
 	) { // -->
 	
+
 		// reset icon
 		$icon = null;
 

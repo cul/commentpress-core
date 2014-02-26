@@ -20,8 +20,62 @@
 
 
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php
+// for use in category template, get link to previous/next (alphabetic) categories
+$current_page = get_the_ID();
+$previous = -1;
+$next = 0;
+$count = 0;
+$args = array(
+'sort_column' => 'ID',
+'sort_order' => 'ASC',
+'hierarchical' => 0,
+'hide_empty' => 1
+);
+	
+$pages = get_pages($args);
 
+foreach ($pages as $pag) {
+		
+$count++;
+
+if ($pag->ID == $current_page) {
+
+ $previous = $count - 2;
+									     
+ $next = $count;
+									 
+}
+									 
+}
+
+if($current_page == 8672){
+  $previous = -1;
+ }
+
+
+if ($previous >= 0){
+
+echo '<p>Previous page: <a href="' . get_page_link( $pages[$previous]->ID ) . '" title="' . sprintf( __( "View all posts in %s" ), $pages[$previous]->post_title ) . '" ' . '>' . $pages[$previous]->post_title.'</a> </p> ';
+									 
+}
+									 
+if ($next > 0 && $next < count($pages)) {
+									   
+echo '<p>Next page: <a href="' . get_page_link( $pages[$next]->ID ) . '" title="' . sprintf( __( "View all posts in %s" ), $pages[$next]->post_title ) . '" ' . '>' . $pages[$next]->post_title.'</a> </p> ';
+								
+}
+								       
+
+
+
+
+
+?>
+
+
+
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 <div class="post<?php echo commentpress_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
@@ -38,8 +92,10 @@
 	
 	}
 
+
 	?>
 	
+
 
 
 	<?php
