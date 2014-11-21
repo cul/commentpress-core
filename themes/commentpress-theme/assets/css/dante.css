@@ -1,0 +1,28 @@
+span.ln {
+	
+	display: block;
+	float: left;
+	margin-left: -33px;
+	font-family: 'Lato';
+	color: #ccc;
+	font-size: .6em;
+/* 	line-height: 1.5em; */
+	margin-top: .6em;
+	text-align: right;
+	width: 25px;
+}
+
+.post span.commenticonbox{
+	
+	opacity: .3;
+}
+
+.post span.commenticonbox:hover{
+	
+	opacity: 1;
+}
+
+div.content_right{
+	
+	margin-top: -.5em;
+}
