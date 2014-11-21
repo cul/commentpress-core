@@ -353,6 +353,17 @@ function commentpress_enqueue_scripts_and_styles() {
 		
 	);
 	
+	
+		wp_enqueue_style( 
+		
+		'cp_digitaldante_css', 
+		get_template_directory_uri() . '/assets/css/dante.css',
+		array( 'cp_webfont_css' ),
+		COMMENTPRESS_VERSION, // version
+		'all' // media
+		
+	);
+	
 	// -------------------------------------------------------------------------
 	// Javascripts
 	// -------------------------------------------------------------------------

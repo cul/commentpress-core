@@ -45,7 +45,7 @@ span.highlight,
 .item-title a,
 div#message-thread strong a
 {
-	font-family: Lato, 'Trebuchet MS', Helvetica, Arial, sans-serif;
+	font-family: "metamorphous", serif;
 }
 
 body.create-blog #cp-multisite-options h4,
@@ -366,7 +366,7 @@ Poetry
 /* body (allow Theme Customizer to set colour for non-groupblogs) */
 body.blogtype-1
 {
-	background: #2C6D1F;
+	background: url("../../../../../../themes/dante-core/assets/img/dante-paper-bg.png");;
 }
 
 /* body (do not allow Theme Customizer to set colour for groupblogs) */
