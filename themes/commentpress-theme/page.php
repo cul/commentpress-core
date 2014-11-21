@@ -21,6 +21,8 @@
 
 
 <?php
+
+ /*
 // for use in category template, get link to previous/next (alphabetic) categories
 $current_page = get_the_ID();
 $previous = -1;
@@ -66,7 +68,7 @@ echo '<p>Next page: <a href="' . get_page_link( $pages[$next]->ID ) . '" title="
 								
 }
 								       
-
+ */
 
 
 

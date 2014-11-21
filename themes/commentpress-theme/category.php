@@ -30,7 +30,9 @@
 								       
 					
 
+								       
 <?php
+/*
 // for use in category template, get link to previous/next (alphabetic) categories
 if ( is_category() ) {
 $current_cat = get_query_var('cat');
@@ -73,6 +75,7 @@ echo '<p>Next page: <a href="' . get_category_link( $categories[$next]->term_id 
 }
 								       
 }
+*/
 ?>
 
 
@@ -101,7 +104,8 @@ echo '<p>Next page: <a href="' . get_category_link( $categories[$next]->term_id 
                          ?>
 
 						   
-			<b><?php the_title(); ?></b>
+			 <b><?php /* the_title(); */ ?></b> 
+		 
 			
 
 			<?php the_content() ?>
