@@ -1,0 +1,59 @@
+.navbar-brand, h1.metamorphous{
+	
+	font-family: "metamorphous", serif;
+	color: white;
+	 
+}
+
+ body.home{
+	 
+	 background: url('../img/Dante_Domenico_di_Michelino_Duomo_Florence.jpg')  top center;
+ }
+	
+ div#main{
+	 
+	 min-height: 600px;
+ }
+ 
+img#cu{
+	
+	
+	float: right;
+	height: 30px;
+	margin-top: 20px;
+}
+
+body{
+	
+	background: url('../img/beige_paper.png');
+	font-family: 'cardo';
+	color: #2e2f31;
+	font-size: 18px;
+}
+
+a{
+	
+	color: #b14640;
+}
+
+span.pnumber{
+	
+	display: block;
+	float: left;
+	margin-left: -26px;
+	text-align: right;
+	color: #abb2a2;
+	font-family: Hevetica, sans-serif;
+}
+
+nav.navbar{
+	
+	background: url('../img/Dante_Domenico_di_Michelino_Duomo_Florence.jpg') top center;
+	
+
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	
+	color: white;
+}
